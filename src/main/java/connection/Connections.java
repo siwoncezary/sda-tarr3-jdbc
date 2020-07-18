@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public enum Connections {
-    MARIADB("jdbc:mysql://localhost/pointofsale","root","1234"); // new JdbcConnection(
+    MARIADB("jdbc:mysql://localhost:3306/pointofsale","root","1234"); // new JdbcConnection(
     private Connection connection;
 
     Connections(String url, String user, String password) {
