@@ -18,5 +18,6 @@ public class ResultSetNullDemo {
                 System.out.println(name + " " + salary);
             }
         }
+       
     }
 }
