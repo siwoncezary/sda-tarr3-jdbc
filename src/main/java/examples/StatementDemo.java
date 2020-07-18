@@ -18,9 +18,7 @@ public class StatementDemo {
             System.out.println(result == 0 ? "Success" : "Fault");
             statement.close();
             //Dodać jeden rekord
-            String insertSeller = "insert into sellers values(" +
-                    "1, 'ADAM', 'KOWAL','2000-10-10'" +
-                    ")";
+            String insertSeller = "insert into sellers values(1, 'BOŻENA', 'KOWAL','2000-10-10')";
             statement = Connections.MARIADB.getConnection().createStatement();
             result = statement.executeUpdate(insertSeller);
             System.out.println(result == 1 ? "Success" : "Fault");
