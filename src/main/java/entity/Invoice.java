@@ -10,7 +10,9 @@ import java.util.Objects;
 
 @Entity
 @NamedQuery(name = "monthSummary",
-        query = "")
+        query = "select sum(i.price) from Invoice i where i.seller.id = :seller_id " +
+                "and Year(i.date) = :year " +
+                "and Month(i.date) = :month")
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

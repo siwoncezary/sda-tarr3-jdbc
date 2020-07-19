@@ -38,6 +38,25 @@ public class PointOfSaleApp {
                 .getResultStream().forEach(System.out::println);
     }
 
+    private static void monthSummary(){
+        System.out.println("Podaj id sprzedawcy:");
+        long id = scanner.nextLong();
+        scanner.nextLine();
+        System.out.println("Podaj rok:");
+        int year = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Podaj miesiąc:");
+        int month = scanner.nextInt();
+        scanner.nextLine();
+        EntityManager em = factory.createEntityManager();
+        BigDecimal sum = em.createNamedQuery("monthSummary", BigDecimal.class)
+                .setParameter("seller_id", id)
+                .setParameter("year", year)
+                .setParameter("month", month)
+                .getSingleResult();
+        System.out.println("Suma za podanym miesiąc: " + sum);
+    }
+
     public static void main(String[] args) {
         while (true) {
             switch (menu()) {
@@ -71,6 +90,10 @@ public class PointOfSaleApp {
                     invoicesForSeller();
                 }
                 break;
+                case 9:{
+                    monthSummary();
+                }
+                    break;
                 case 0: {
                     System.exit(0);
                 }
