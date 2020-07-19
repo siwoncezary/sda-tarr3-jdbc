@@ -23,6 +23,16 @@ public class Seller {
 
     private int salary;
 
+    public Seller(String firstName, String lastName, LocalDate birthDate, int salary){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.salary = salary;
+    }
+
+    public Seller() {
+    }
+
     public long getId() {
         return id;
     }
