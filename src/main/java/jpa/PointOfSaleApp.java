@@ -1,10 +1,12 @@
 package jpa;
 
+import entity.Invoice;
 import entity.Seller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -19,8 +21,21 @@ public class PointOfSaleApp {
         System.out.println("3. Usuń sprzedawcę.");
         System.out.println("4. Zmiana danych sprzedawcy.");
         System.out.println("5. Pobierz i odłącz sprzedawce.");
+        System.out.println("6. Wykonaj zapytanie JPQL.");
+        System.out.println("7. Dodaj fakturę.");
+        System.out.println("8. Wyświetl faktury dla sprzedawcy.");
+        System.out.println("9. Zestawienie miesięczne faktur.");
         System.out.println("0. Wyjdź");
         return scanner.nextInt();
+    }
+
+    private static void invoicesForSeller(){
+        System.out.println("Podaj id sprzedawcy:");
+        long id = scanner.nextLong();
+        scanner.nextLine();
+        EntityManager em = factory.createEntityManager();
+        em.createNamedQuery("invoices", Invoice.class).setParameter("seller_id", id)
+                .getResultStream().forEach(System.out::println);
     }
 
     public static void main(String[] args) {
@@ -44,6 +59,17 @@ public class PointOfSaleApp {
                 case 5: {
                     detachSeller();
                 }
+                case 6: {
+                    runQuery();
+                }
+                break;
+                case 7: {
+                    createInvoice();
+                }
+                break;
+                case 8:{
+                    invoicesForSeller();
+                }
                 break;
                 case 0: {
                     System.exit(0);
@@ -56,7 +82,18 @@ public class PointOfSaleApp {
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
         List<Seller> sellers = em.createQuery("select s from Seller s", Seller.class).getResultList();
-        sellers.forEach(seller -> System.out.println(seller));
+        sellers.forEach(seller -> {
+            System.out.println(seller);
+//          Pobranie faktur dla danego sprzedawcy dla związku jednokierunkowego - tylko po stronie Invoice
+//            List<Invoice> invoices = em.createQuery("select i from Invoice i where i.seller.id = :id", Invoice.class)
+//                    .setParameter("id", seller.getId())
+//                    .getResultList();
+            //wykorzystujemy dwukierunowy związek jedne-do-wielu
+            //może wpływać na znacząco na wydajność, gdy każdy z pracowników ma b. dużo faktur
+            for(Invoice item: seller.getInvoices()){
+                System.out.println(item);
+            }
+        });
         em.getTransaction().commit();
         em.close();
     }
@@ -78,6 +115,23 @@ public class PointOfSaleApp {
         em.getTransaction().commit();
         em.close();
         scanner.nextLine(); //pusty odczyt znaku końca linii (Enter)
+    }
+
+    private static void createInvoice(){
+        System.out.println("Podaj id sprzedawcy:");
+        long id = scanner.nextLong();
+        scanner.nextLine();
+        EntityManager em = factory.createEntityManager();
+        em.getTransaction().begin();
+        Seller seller = em.find(Seller.class, id);
+        System.out.println("Podaj dane klienta:");
+        String customer = scanner.nextLine();
+        System.out.println("Podaj kwotę faktury:");
+        BigDecimal price = scanner.nextBigDecimal();
+        Invoice invoice = new Invoice(seller, price, customer);
+        em.persist(invoice);
+        em.getTransaction().commit();
+        em.close();
     }
 
     private static void deleteSeller(){
@@ -140,5 +194,14 @@ public class PointOfSaleApp {
         seller = em.find(Seller.class, 1L);
         System.out.println("Sprzedawca nr 1 pobrany z bazy");
         System.out.println(seller);
+    }
+
+    private static void runQuery(){
+        System.out.println("Podaj zapytanie:");
+        scanner.nextLine();
+        String query = scanner.nextLine();
+        EntityManager em = factory.createEntityManager();
+        em.createQuery(query, Seller.class).getResultStream()
+                .forEach(System.out::println);
     }
 }

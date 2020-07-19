@@ -1,12 +1,14 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
+@NamedQuery(name = "invoices", query = "select i from Invoice i where i.seller.id = :seller_id order by i.date")
 @Table(name = "sellers")
 public class Seller {
     @Id
@@ -21,7 +23,19 @@ public class Seller {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Column(name = "salary")
     private int salary;
+
+    //drugi kierunek związku jeden-do-wielu
+    //fetch decydyje o pobieraniu faktur
+    //EAGER - faktury są natychmiast pobierane razem z encją
+    //LAZY - faktury są pobierane dopiero gdy wywołamy getInvoices() na encji
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
+    private Set<Invoice> invoices = new HashSet<>();
+
+    public Set<Invoice> getInvoices() {
+        return invoices;
+    }
 
     public Seller(String firstName, String lastName, LocalDate birthDate, int salary){
         this.firstName = firstName;
@@ -78,5 +92,18 @@ public class Seller {
                 ", birthDate=" + birthDate +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Seller seller = (Seller) o;
+        return getId() == seller.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
