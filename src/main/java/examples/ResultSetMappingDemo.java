@@ -82,6 +82,5 @@ public class ResultSetMappingDemo {
         Connection con = Connections.MARIADB.getConnection();
         ResultSet set = con.createStatement().executeQuery("select * from sellers");
         List<Seller> sellers = SellerMapper.INSTANCE.from(set);
-
     }
 }
