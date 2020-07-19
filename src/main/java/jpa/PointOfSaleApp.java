@@ -18,6 +18,7 @@ public class PointOfSaleApp {
         System.out.println("2. Dodaj sprzedawcę.");
         System.out.println("3. Usuń sprzedawcę.");
         System.out.println("4. Zmiana danych sprzedawcy.");
+        System.out.println("5. Pobierz i odłącz sprzedawce.");
         System.out.println("0. Wyjdź");
         return scanner.nextInt();
     }
@@ -39,6 +40,9 @@ public class PointOfSaleApp {
                 break;
                 case 4: {
                     updateSeller();
+                }
+                case 5: {
+                    detachSeller();
                 }
                 break;
                 case 0: {
@@ -119,6 +123,22 @@ public class PointOfSaleApp {
         }
         em.getTransaction().commit();
         em.close();
+    }
 
+    private static void detachSeller(){
+        EntityManager em = factory.createEntityManager();
+
+        em.getTransaction().begin();
+        Seller seller = em.find(Seller.class, 1L);
+        em.detach(seller);
+        System.out.println(seller);
+        System.out.println("Zmieniam pensję na 5000!");
+        seller.setSalary(5000);
+        System.out.println(seller);
+        em.getTransaction().commit();
+
+        seller = em.find(Seller.class, 1L);
+        System.out.println("Sprzedawca nr 1 pobrany z bazy");
+        System.out.println(seller);
     }
 }
