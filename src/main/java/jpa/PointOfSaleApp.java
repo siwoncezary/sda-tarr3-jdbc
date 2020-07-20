@@ -198,6 +198,7 @@ public class PointOfSaleApp {
         if (!intStr.isEmpty()){
             seller.setSalary(Integer.parseInt(intStr));
         }
+        //zakończenie transakcji powoduje utrwalenie encji, którą zmienialiśmy wewnątrz transakcji
         em.getTransaction().commit();
         em.close();
     }
@@ -207,11 +208,13 @@ public class PointOfSaleApp {
 
         em.getTransaction().begin();
         Seller seller = em.find(Seller.class, 1L);
+        //odłączamu encję od managera
         em.detach(seller);
         System.out.println(seller);
         System.out.println("Zmieniam pensję na 5000!");
         seller.setSalary(5000);
         System.out.println(seller);
+        //pomimo zmian encji, nie zostaną one uwzględnione po została odłączona od managera
         em.getTransaction().commit();
 
         seller = em.find(Seller.class, 1L);
