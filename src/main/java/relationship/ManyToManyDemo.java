@@ -24,6 +24,7 @@ public class ManyToManyDemo {
         programmingTag.setName("Programming");
         em.persist(programmingTag);
 
+
         Set<Tag> tags = new HashSet<>();
         tags.add(javaTag);
         tags.add(programmingTag);

@@ -1,6 +1,7 @@
 package relationship;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,11 +48,25 @@ public class Article {
     }
 
     public Set<Tag> getTags() {
-        return tags;
+        return Collections.unmodifiableSet(tags);
     }
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public void addTag(Tag tag){
+        if (tags == null){
+            tags = new HashSet<>();
+        }
+        tags.add(tag);
+    }
+
+    public void removeTag(Tag tag){
+        if (tags == null){
+            return;
+        }
+        tags.remove(tag);
     }
 
     @Override
