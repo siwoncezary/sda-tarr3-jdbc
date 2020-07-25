@@ -1,12 +1,11 @@
-package examples;
+package jdbc.examples;
 
-import connection.Connections;
+import jdbc.connection.Connections;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;

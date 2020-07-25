@@ -1,3 +1,5 @@
+package reflection;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,7 +14,7 @@ class Car{
 
     @Override
     public String toString() {
-        return "Car{" +
+        return "reflection.Car{" +
                 "power=" + power +
                 ", model='" + model + '\'' +
                 '}';

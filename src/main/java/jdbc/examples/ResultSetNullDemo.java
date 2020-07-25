@@ -1,5 +1,5 @@
-package examples;
-import connection.Connections;
+package jdbc.examples;
+import jdbc.connection.Connections;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

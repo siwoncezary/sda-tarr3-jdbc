@@ -1,7 +1,7 @@
 package jpa;
 
-import entity.Invoice;
-import entity.Seller;
+import jpa.entity.Invoice;
+import jpa.entity.Seller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

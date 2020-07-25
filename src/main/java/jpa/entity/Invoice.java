@@ -1,4 +1,4 @@
-package entity;
+package jpa.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 

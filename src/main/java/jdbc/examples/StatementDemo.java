@@ -1,6 +1,6 @@
-package examples;
+package jdbc.examples;
 
-import connection.Connections;
+import jdbc.connection.Connections;
 
 import java.sql.SQLException;
 import java.sql.Statement;

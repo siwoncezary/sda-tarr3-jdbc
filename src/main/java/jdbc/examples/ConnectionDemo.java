@@ -1,7 +1,6 @@
-package examples;
+package jdbc.examples;
 
-import com.mysql.cj.jdbc.JdbcConnection;
-import connection.Connections;
+import jdbc.connection.Connections;
 
 import java.sql.Connection;
 

@@ -1,13 +1,12 @@
-package examples;
+package jdbc.examples;
 
-import connection.Connections;
+import jdbc.connection.Connections;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Collections;
 
 public class ResultSetInsertDemo {
     public static void main(String[] args) throws SQLException {
