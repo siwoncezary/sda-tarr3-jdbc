@@ -167,6 +167,7 @@ public class PointOfSaleApp {
         em.getTransaction().commit();
         em.close();
     }
+
     private static void updateSeller(){
         System.out.println("Podaj id sprzedawcy");
         long id = scanner.nextLong();
