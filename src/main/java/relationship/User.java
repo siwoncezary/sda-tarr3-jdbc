@@ -12,8 +12,18 @@ public class User {
     //lepiej zrobić to jako char[]
     private String password;
 
+    private String name;
+
     @Embedded
     Address address;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
