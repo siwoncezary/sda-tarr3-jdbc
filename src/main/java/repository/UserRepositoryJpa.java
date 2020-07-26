@@ -11,6 +11,10 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class UserRepositoryJpa extends JpaRepository implements UserRepository{
+    public UserRepositoryJpa(String persistenceUnit) {
+        super(persistenceUnit);
+    }
+
     @Override
     public Stream<User> findByName(String name) {
        return em.createQuery("from User u where u.name = :name", User.class)
